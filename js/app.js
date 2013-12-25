@@ -106,7 +106,7 @@ angular.module('home', ['ngRoute', 'ngAnimate', 'angulartics', 'angulartics.goog
     			if(media.type=='image')
     				$.extend(mediaData, {href : media.image});
     			else if(media.type='youtube')
-    				$.extend(mediaData, {href : "http://www.youtube.com/watch?v="+media.youtubeId});
+    				$.extend(mediaData, {href : "http://www.youtube.com/embed/"+media.youtubeId+"?autoplay=1&autohide=1&fs=1&rel=0&hd=1&wmode=opaque&enablejsapi=1", type: 'iframe'});
     			data.push(mediaData);
     		}
     		return data;
@@ -118,19 +118,10 @@ angular.module('home', ['ngRoute', 'ngAnimate', 'angulartics', 'angulartics.goog
     			padding: 0,
     			nextEffect  : 'fade',
     			prevEffect  : 'fade',
+				theme: 'light',
     			index : $scope.project.media.indexOf(media),
     			helpers : {
-    				media : {},
-    				thumbs : {
-    					width: 50,
-    					height: 50,
-    					source: function(item){
-    						return item.thumbnail;
-    					},
-    				},
-    				title : {
-    					type : 'float',
-    				},
+    				thumbs : true,
     			},
     		});
     	};
