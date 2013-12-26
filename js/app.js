@@ -143,391 +143,54 @@ angular.module('home', ['ngRoute', 'ngAnimate', 'angulartics', 'angulartics.goog
 
 
 	.service('ProjectService', ['$location', function($location){
-		var projects = [
-		{
-			id: "RBE1001",
-			title: "RBE 1001",
-			subtitle: "Robotics Class at WPI",
-			description: "A robot designed to pickup and score medals",
-			image: "content/rbe1001.jpg",
-			media: [
-			{
-				type: 'youtube',
-				youtubeId: "aGn3SdRKeWA",
-				label: "Test",
-			},
-			{
-				type: 'image',
-				image: "https://lh4.googleusercontent.com/-95HFAllagLU/TuMKC8qpjpI/AAAAAAAAA18/_YrObXVMI5c/s0-I/IMG_20111210_015900.jpg",
-				label: "Test2",
-			},
-			{
-				type: 'image',
-				image: "https://lh4.googleusercontent.com/-yeIriS2sfqY/TuZnjAx9KAI/AAAAAAAAA18/utqDIBjrizs/s0-I/IMG_20111212_151703.jpg",
-				label: "Test2",
-			},
-			],
-			properties: [
-			{
-				label: "Technologies",
-				values: ["Java", "DyIO"],
-			},
-			],
-		},
-		{
-			id: "RBE2001",
-			title: "RBE 2001",
-			subtitle: "Robotics Class at WPI",
-			description: 'A robot designed to remove and replace nuclear fuel rods',
-			image: "content/rbe2001.jpg",
-			media: [
-			{
-				type: 'youtube',
-				youtubeId: "6Ig5zaXRn_U",
-				label: "A video of the robot in action",
-			},
-			{
-				type: 'image',
-				image: "content/rbe2001.jpg",
-				label: "A side view of the robot",
-			},
-			],
-			properties: [
-			{
-				label: "Technologies",
-				values: ["C++", "VEX"],
-			},
-			{
-				label: "Platform",
-				value: "Arduino",
-			},
-			],
-		},
-		{
-			id: "RBE3002",
-			title: "RBE 3002",
-			subtitle: "Robotics Class at WPI",
-			description: 'A robot designed to autonomously navigate a field of obstacles',
-			image: "http://www.willowgarage.com/sites/default/files/robots_turtlebot/TurtleBot-Front-640w.png",
-			media: [
-			{
-				type: 'youtube',
-				youtubeId: "FZXB38EeMqo",
-				label: "Test",
-			},
-			{
-				type: 'youtube',
-				youtubeId: "WuImTcW-fY0",
-				label: "Test",
-			},
-			{
-				type: 'image',
-				image: "content/rbe3002.jpg",
-				label: "Timelapse of our final run",
-			},
-			],
-			properties: [
-			{
-				label: "Technologies",
-				values: ["ROS", "C++"],
-			},
-			{
-				label: "Platform",
-				value: "Linux",
-			},
-			],
-		},
-		{
-			id: "AERO",
-			title: "AERO",
-			subtitle: "Autonomous Exploration Rover",
-			image: "http://lh4.googleusercontent.com/-NJw8ENX9_ZM/Ug00fPKyi9I/AAAAAAAAAU8/sfdt477LsN4/20130815_150514.jpg?imgmax=640",
-			media: [
-			{
-				type: 'image',
-				image: "http://lh4.googleusercontent.com/-NJw8ENX9_ZM/Ug00fPKyi9I/AAAAAAAAAU8/sfdt477LsN4/20130815_150514.jpg?imgmax=640",
-				label: "Test",
-			},
-			],
-			links: [
-			{
-				label: 'Team Website',
-				url: 'http://robot.wpi.edu/rover/',
-			}
-			],
-			properties: [
-			{
-				label: "Technologies",
-				values: ["ROS", "C++", "Python", "Arduino", "Device Drivers"],
-			},
-			{
-				label: "Platform",
-				value: "Linux",
-			},
-			],
-		},
-		{
-			id: "WeeCoder",
-			title: "WeeCoder",
-			subtitle: "A Windows 8 App",
-			image: "content/weecoder.png",
-			media: [
-			],
-			links: [
-			{
-				label: 'View in Windows Store',
-				url: 'http://apps.microsoft.com/windows/en-us/app/weecoder/00d00115-5b65-4269-92e0-368c6a889940',
-			}
-			],
-			properties: [
-			{
-				label: "Technologies",
-				values: ["C#", "XAML"],
-			},
-			{
-				label: "Platform",
-				value: "Windows 8.1",
-			},
-			],
-		},
-		{
-			id: "NetworkTables",
-			title: "Network Tables",
-			subtitle: "FIRST Robotics Library",
-			color: '#B22222',
-			media: [
-			],
-			links: [
-			{
-				label: 'Source Code',
-				url: 'https://usfirst.collab.net/sf/projects/networktables/',
-			}
-			],
-			properties: [
-			{
-				label: "Technologies",
-				values: ["C++", "Java"],
-			},
-			{
-				label: "Platforms",
-				values: ["cRIO", "Desktop"],
-			},
-			],
-		},
-		{
-			id: "AlwaysOn",
-			title: "Always On",
-			fullTitle: "Always On Relational Agents for Social Support of Isolated Older Adults",
-			subtitle: "Agent for Isolated Adults",
-			color: '#AFEEEE',
-			media: [
-			],
-			links: [
-			{
-				label: 'Project Page',
-				url: 'http://web.cs.wpi.edu/~rich/always/',
-			}
-			],
-			properties: [
-			{
-				label: "Technologies",
-				values: ["C#", "XAML"],
-			},
-			],
-		},
-	];
+		var projects = includeFile("data/projects.json");
 
-	function navToProject(project){
-		if(!project)
-			return;
-		if(project.url)
-			window.location.href = project.url;
-		else
-			$location.path("/project/"+project.id);
-	}
-
-	function projectBackgroundStyle(project){
-		if(!project)
-			return;
-		var style = "";
-		if(project.color)
-			style += " "+project.color;
-		if(project.image)
-			style += " url('"+project.image+"')";
-		return style;
-	}
-
-	return {
-		projects: projects,
-		navToProject: navToProject,
-		projectBackgroundStyle: projectBackgroundStyle,
-		projectFromId: function(id){
-		for(var i in projects){
-			var project = projects[i];
-			if(project.id==id)
-			return project;
+		function navToProject(project){
+			if(!project)
+				return;
+			if(project.url)
+				window.location.href = project.url;
+			else
+				$location.path("/project/"+project.id);
 		}
+
+		function projectBackgroundStyle(project){
+			if(!project)
+				return;
+			var style = "";
+			if(project.color)
+				style += " "+project.color;
+			if(project.image)
+				style += " url('"+project.image+"')";
+			return style;
 		}
-	};
+
+		return {
+			projects: projects,
+			navToProject: navToProject,
+			projectBackgroundStyle: projectBackgroundStyle,
+			projectFromId: function(id){
+			for(var i in projects){
+				var project = projects[i];
+				if(project.id==id)
+				return project;
+			}
+			}
+		};
 	}])
 	.service('ExperienceService', function(){
-		var work = [
-		{
-			company: "WPI FIRST Robotics Library",
-			companyLink: "http://usfirst.collab.net",
-			title: "Software Developer",
-			location: "Worcester, MA",
-			date: "September 2011 – Present",
-			properties: [
-			{
-				label: "Technologies",
-				values: ["Java", "C++"],
-			}
-			],
-			descriptions: [
-			"Developed programming libraries for thousands of high school students",
-			"Developed cross-language, table-based communication library",
-			"Implemented distributed testing framework",
-			"Improved continuous integration build process",
-			],
-			projectIds: ["NetworkTables",],
-		},
-		{
-			company: "Microsoft",
-			companyLink: "http://microsoft.com",
-			title: "Foundry Developer Intern",
-			location: "Cambridge, MA",
-			date: "June 2013 – August 2013",
-			properties: [
-			{
-				label: "Technologies",
-				values: ["C#", "XAML", "WinRT"],
-			}
-			],
-			descriptions: [
-			"Developed Windows 8 game (WeeCoder) to teach programming to young children",
-			"Participated in entire software development process from design to testing",
-			],
-			projectIds: ["WeeCoder",],
-		},
-		{
-			company: "WPI Interactions Lab",
-			companyLink: "http://web.cs.wpi.edu/~rich/hri/",
-			title: "Research Assistant",
-			location: "Worcester, MA",
-			date: "May 2012 – August 2012",
-			properties: [
-			{
-				label: "Technologies",
-				values: ["C#", "XAML"],
-			}
-			],
-			descriptions: [
-			"Always On Project",
-			"Implemented calendaring API",
-			"Developed ontologies for storing user data",
-			"Developed a Virtual Human Agent",
-			],
-			projectIds: ["AlwaysOn",],
-		},
-		{
-			company: "MITRE",
-			companyLink: "http://mitre.org",
-			title: "Summer Intern",
-			location: "Bedford, MA",
-			date: "June 2011 – August 2011",
-			properties: [
-			{
-				label: "Technologies",
-				values: ["C", "C++"],
-			}
-			],
-			descriptions: [
-			"Developed tests for software security software",
-			"Participated in software security capture the flag event",
-			],
-		},
-		{
-			company: "Boston Museum of Science",
-			companyLink: "http://mos.org",
-			title: "Volunteer",
-			location: "Boston, MA",
-			date: "June 2010 – August 2011",
-			descriptions: [
-			"Educated visitors of the museum",
-			"Aided in day-to-day operation of Cahners ComputerPlace",
-			],
-		},
-		{
-			company: "Azuki Systems",
-			companyLink: "http://www.azukisystems.com/",
-			title: "Summer Intern",
-			location: "Acton, MA",
-			date: "June 2010 – August 2010",
-			properties: [
-			{
-				label: "Technologies",
-				values: ["C++", "Java", "Android"],
-			}
-			],
-			descriptions: [
-			"Investigated application security on mobile devices",
-			"Ported libraries to multiple languages",
-			],
-		},
-		];
-		var skills = [
-		{
-			title: "Fluent Programming Languages",
-			items: ["Java", "C", "C++", "C#", "XAML", "Javascript"],
-		},
-		{
-			title: "Familiar With",
-			items: ["Python", "Racket (LISP)", "Bash"],
-		},
-		{
-			title: "Applications",
-			items: ["Eclipse", "NetBeans", "Visual Studio", "Microsoft Office", "SolidWorks"],
-		},
-		{
-			title: "Platforms",
-			items: ["Windows", "Linux", "Embedded Systems", "ROS (Robot Operating System)", "Web"],
-		},
-		];
+		var work = includeFile("data/work.json");
+		var skills = includeFile("data/skills.json");
 		return {
 			work: work,
 			skills: skills,
 		};
 	})
 	.service('ProfileService', function(){
-		var profiles = [
-		{
-			title: "Linkedin",
-			url: "http://www.linkedin.com/in/mitchellwills/",
-			iconClass: "fa fa-linkedin-square fa-lg fa-fw",
-			color: "#007bb6",
-		},
-		{
-			title: "Google+",
-			url: "http://plus.google.com/+MitchellWills",
-			iconClass: "fa fa-google-plus-square fa-lg fa-fw",
-			color: "#dd4b39",
-		},
-		{
-			title: "Facebook",
-			url: "http://www.facebook.com/mitchellewills",
-			iconClass: "fa fa-facebook-square fa-lg fa-fw",
-			color: "#3b5998",
-		},
-		{
-			title: "Github Profile",
-			url: "http://github.com/mitchellweb1",
-			iconClass: "fa fa-github fa-lg fa-fw",
-		},
-		];
-	return {
-		profiles: profiles,
-	};
+		var profiles = includeFile("data/profiles.json");
+		return {
+			profiles: profiles,
+		};
 	})
 	.directive('tile', function() {
 		return {
