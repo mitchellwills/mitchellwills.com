@@ -16,7 +16,7 @@
 
 	<div ng-if="project.media">
 		<h3>Media</h3>
-		<tile ng-repeat="media in project.media" ng-click="selectMedia(media)" label="{{media.label}}" sublabel="{{media.type}}" content-background="url('{{mediaThumbnail(media)}}')">
+		<tile ng-repeat="media in project.media" ng-click="selectMedia(media)" label="{{media.label}}" sublabel="" content-background="url('{{mediaThumbnail(media)}}')">
 			<div ng-if="media.type=='youtube'" class="tile-content-center-text">
 				<span class="glyphicon glyphicon-play-circle" style="font-size:40px;color:#eeeeee;"/>
 			</div>
